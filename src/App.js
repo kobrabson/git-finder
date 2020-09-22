@@ -17,8 +17,7 @@ class App extends Component {
     this.setState({ users: res.data, loading: false });
   }
 
-  // Search Github Users passed by props from Search.js
-
+  //! Search Github Users passed by props from Search.js
   searchUsers = async (text) => {
     this.setState({ loading: true });
     // console.log(text);
@@ -28,13 +27,22 @@ class App extends Component {
     this.setState({ users: res.data.items, loading: false });
   };
 
+  // ! Clear Users passed by props from Search.js
+  clearUsers = async () => {
+    this.setState({ loading: true });
+    const res = await axios.get("https://api.github.com/users");
+    this.setState({ users: res.data, loading: false });
+  };
+
   render() {
+    const { loading, users } = this.state;
+
     return (
       <div className="App">
         <Navbar title="Github Finder" />
         <div className="container">
-          <Search searchUsers={this.searchUsers} />
-          <Users loading={this.state.loading} users={this.state.users} />
+          <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} />
+          <Users loading={loading} users={users} />
         </div>
       </div>
     );
