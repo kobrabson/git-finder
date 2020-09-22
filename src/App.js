@@ -20,6 +20,7 @@ class App extends Component {
   // Search Github Users passed by props from Search.js
 
   searchUsers = async (text) => {
+    this.setState({ loading: true });
     // console.log(text);
     const res = await axios.get(
       `https://api.github.com/search/users?q=${text}`
